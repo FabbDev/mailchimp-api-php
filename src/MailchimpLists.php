@@ -318,17 +318,19 @@ class MailchimpLists extends MailchimpApiUser {
    *   The ID of the list.
    * @param array $parameters
    *   Associative array of optional request parameters.
+   * @param bool $batch
+   *   TRUE if this request should be added to pending batch operations.
    *
    * @return object
    *
    * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/#read-get_lists_list_id_members
    */
-  public function getMembers($list_id, $parameters = []) {
+  public function getMembers($list_id, $parameters = [], $batch = FALSE) {
     $tokens = [
       'list_id' => $list_id,
     ];
 
-    return $this->api_class->request('GET', '/lists/{list_id}/members', $tokens, $parameters);
+    return $this->api_class->request('GET', '/lists/{list_id}/members', $tokens, $parameters, $batch);
   }
 
   /**

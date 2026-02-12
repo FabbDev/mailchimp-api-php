@@ -62,16 +62,18 @@ class MailchimpReports extends MailchimpApiUser {
    *    - unsubscribed        @see http://developer.mailchimp.com/documentation/mailchimp/reference/reports/unsubscribed
    * @param array $parameters
    *   Associative array of optional request parameters.
+   * @param bool $batch
+   *   TRUE if this request should be added to pending batch operations.
    *
    * @return object
    */
-  public function getCampaignReport($campaign_id, $type, $parameters = []) {
+  public function getCampaignReport($campaign_id, $type, $parameters = [], $batch = FALSE) {
     $tokens = [
       'campaign_id' => $campaign_id,
       'type' => $type,
     ];
 
-    return $this->api_class->request('GET', '/reports/{campaign_id}/{type}', $tokens, $parameters);
+    return $this->api_class->request('GET', '/reports/{campaign_id}/{type}', $tokens, $parameters, $batch);
   }
 
 }
