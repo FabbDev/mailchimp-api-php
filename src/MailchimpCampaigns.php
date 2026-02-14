@@ -94,12 +94,12 @@ class MailchimpCampaigns extends MailchimpApiUser {
    *
    * @see http://developer.mailchimp.com/documentation/mailchimp/reference/campaigns/content/#read-get_campaigns_campaign_id_content
    */
-  public function getCampaignContent($campaign_id, $parameters = [], $batch = FALSE) {
+  public function getCampaignContent($campaign_id, $parameters = [], $batch = FALSE, $batch_operation_id = NULL) {
     $tokens = [
       'campaign_id' => $campaign_id,
     ];
 
-    return $this->api_class->request('GET', '/campaigns/{campaign_id}/content', $tokens, $parameters, $batch);
+    return $this->api_class->request('GET', '/campaigns/{campaign_id}/content', $tokens, $parameters, $batch, FALSE, $batch_operation_id);
   }
 
   /**

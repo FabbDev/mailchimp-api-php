@@ -139,7 +139,7 @@ class Mailchimp implements MailchimpApiInterface {
    *
    * @see http://developer.mailchimp.com/documentation/mailchimp/reference/batches/#create-post_batches
    */
-  protected function addBatchOperation($method, $path, $parameters = []) {
+  protected function addBatchOperation($method, $path, $parameters = [], $operation_id = NULL) {
     if (empty($method) || empty($path)) {
       throw new MailchimpAPIException('Cannot add batch operation without a method and path.');
     }
@@ -148,6 +148,9 @@ class Mailchimp implements MailchimpApiInterface {
       'method' => $method,
       'path' => $path,
     ];
+    if (isset($operation_id)) {
+      $op->operation_id = $operation_id;
+    }
 
     if (!empty($parameters)) {
       if ($method == 'GET') {
@@ -188,7 +191,7 @@ class Mailchimp implements MailchimpApiInterface {
    *
    * @throws MailchimpAPIException
    */
-  public function request($method, $path, $tokens = NULL, $parameters = [], $batch = FALSE, $returnAssoc = FALSE) {
+  public function request($method, $path, $tokens = NULL, $parameters = [], $batch = FALSE, $returnAssoc = FALSE, $batch_operation_id = NULL) {
     if (!empty($tokens)) {
       foreach ($tokens as $key => $value) {
         $path = str_replace('{' . $key . '}', $value, $path);
@@ -196,7 +199,7 @@ class Mailchimp implements MailchimpApiInterface {
     }
 
     if ($batch) {
-      return $this->addBatchOperation($method, $path, $parameters);
+      return $this->addBatchOperation($method, $path, $parameters, $batch_operation_id);
     }
 
     // Set default request options with auth header.

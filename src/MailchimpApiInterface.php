@@ -32,7 +32,7 @@ interface MailchimpApiInterface {
    *
    * @throws MailchimpAPIException
    */
-  public function request($method, $path, $tokens = NULL, $parameters = [], $batch = FALSE, $returnAssoc = FALSE);
+  public function request($method, $path, $tokens = NULL, $parameters = [], $batch = FALSE, $returnAssoc = FALSE, $batch_operation_id = NULL);
 
   /**
    * Checks if key or token is in place.
